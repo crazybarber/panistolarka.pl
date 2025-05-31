@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pani Stolarka - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6f6794109e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Sticky header that appears when scrolling -->
+    <header class="sticky-header" id="sticky-header">
+        <div class="header-container">
+            <div class="header-logo">
+                <img src="/images/Pani-Stolarka-Logo.svg" alt="Logo Pani Stolarka">
+            </div>
+            <nav class="header-nav">
+                <a href="#about">O mnie</a>
+                <a href="#gallery">Galeria</a>
+                <a href="#testimonials">Opinie</a>
+                <a href="#contact">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero section with full-screen logo as background -->
+    <section class="hero-section" id="hero-section">
+        <div class="hero-logo-container">
+            <img src="/images/Pani-Stolarka-Logo.svg" alt="Logo Pani Stolarka" class="hero-logo">
+        </div>
+    </section>
+
+    <!-- Content wrapper that slides over the hero section -->
+    <div class="content-wrapper">
+        <section class="about" id="about">
+            <div class="about-container">
+                <div class="about-text">
+                    <h2>O mnie</h2>
+                    <p>Choć stolarstwem zajmuję się od 2020 roku, zamiłowanie do drewna mam w sobie od zawsze. Jako dziecko wolałam rozkręcać okna i montować szafki niż obierać ziemniaki i kroić szczypiorek. Przez 12 lat grałam na skrzypcach – i to właśnie one stały się moją pierwszą inspiracją. Postanowiłam, że kiedyś zrobię własne skrzypce. „Ale żeby zrobić skrzypce, muszę najpierw nauczyć się pracy z drewnem" – pomyślałam. Kupiłam pierwsze dłuto… i ruszyła lawina: kolejne narzędzia, zapasy materiału, kursy, szkolenia – a przede wszystkim godziny nauki metodą prób i błędów.</p>
+                    <p>Dziś, w mojej pracowni na warszawskiej Woli, spełniam marzenia moich klientów, tworząc dla nich unikatowe, personalizowane meble. Bo choć kocham drewno i rzemiosło, to tak naprawdę to ludzie są najważniejsi. Meble są tylko środkiem – narzędziem do tego, by realizować czyjeś potrzeby, poprawiać codzienność, spełniać wizje i marzenia. Największą satysfakcję daje mi moment, w którym klient widzi gotowy projekt i mówi: „To dokładnie to, czego potrzebowałam/em".</p>
+                    <p>Poza pracownią najwięcej radości daje mi odkrywanie nowych miejsc i smaków – podróże, dobre jedzenie i wieczory spędzane z najbliższymi to dla mnie najlepszy sposób na ładowanie baterii. Zawsze towarzyszy mi muzyka – w tle, w słuchawkach, w głowie.</p>
+                </div>
+                <div class="about-image">
+                    <div class="about-image-frame">
+                        <img src="/images/self/about.webp" alt="Pani Stolarka" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="gallery-section">
+            <h2>Portfolio</h2>
+            <p class="gallery-intro">Kliknij na zdjęcie, aby zobaczyć je w pełnym rozmiarze</p>
+            <div id="gallery-container"></div>
+        </section>
+
+        <section class="testimonials" id="testimonials">
+            <h2>Opinie Klientów</h2>
+            <div id="testimonials-carousel-container"></div>
+        </section>
+
+        <section class="contact" id="contact">
+            <h2>Skontaktuj się ze mną</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <p>
+                        Jeżeli szukasz wymarzonego mebla dla siebie, jeżeli chcesz abym pomogła rozwiązać. Twój problem lub spełnić Twoje marzenie – napisz – być może od rozwiązania dzieli Cię tylko wiadomość!
+                    </p>
+                    <form action="https://formsubmit.co/pani.stolarka@gmail.com" method="POST" class="contact-form">
+                        <input type="email" name="Twój E-mail" placeholder="Twój e-mail" required>
+                        <input type="text" name="Temat" placeholder="Temat wiadomości" required>
+                        <textarea name="Wiadomość" placeholder="Twoja wiadomość" rows="5" required></textarea>
+                        <button type="submit">Wyślij</button>
+                    </form>
+                </div>
+                <div class="contact-photo">
+                    <img src="/images/self/contactme.webp" alt="Pani Stolarka przy pracy" />
+                    <div class="contact-socials" style="text-align: center;">
+                        <a href="https://www.instagram.com/pani_stolarka" target="_blank" rel="noopener" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/people/Pani-Stolarka/61559927172046/" target="_blank" rel="noopener" aria-label="Facebook">
+                            <i class="fab fa-facebook-square"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2025 Pani Stolarka. Wszystkie prawa zastrzeżone.</p>
+        </footer>
+    </div>
+
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+        // Header visibility on scroll and parallax effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.getElementById('sticky-header');
+            const heroSection = document.getElementById('hero-section');
+            const heroHeight = heroSection.offsetHeight;
+            const heroLogo = document.querySelector('.hero-logo');
+            
+            function handleScroll() {
+                const scrollY = window.scrollY;
+                
+                // Show/hide sticky header
+                if (scrollY > heroHeight * 0.7) {
+                    header.classList.add('visible');
+                } else {
+                    header.classList.remove('visible');
+                }
+                
+                // Add parallax effect to hero logo
+                heroLogo.style.transform = `translateY(${scrollY * 0.2}px)`;
+            }
+            
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
+        });
+    </script>
+</body>
+</html>
