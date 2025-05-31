@@ -32,7 +32,8 @@ function extractFields(testimonial) {
 }
 
 function getVisibleCount(width) {
-  if (width < 600) return 1;      // Mobile
+  if (width < 480) return 1;      // Small Mobile
+  if (width < 768) return 1;      // Mobile
   if (width < 1024) return 2;     // Tablet
   return 3;                       // Desktop
 }
@@ -41,11 +42,13 @@ export default function TestimonialsCarousel() {
   const [current, setCurrent] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
   const textRefs = useRef([]);
+  const containerRefs = useRef([]);
 
   // Wykrywanie rozdzielczości ekranu
   useEffect(() => {
     const handleResize = () => {
-      setVisibleCount(getVisibleCount(window.innerWidth));
+      const newVisibleCount = getVisibleCount(window.innerWidth);
+      setVisibleCount(newVisibleCount);
     };
 
     // Ustawienie początkowej wartości
@@ -58,35 +61,60 @@ export default function TestimonialsCarousel() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Funkcja do automatycznego dostosowania rozmiaru czcionki
+  // Funkcja do automatycznego dostosowania rozmiaru czcionki i formatowania tekstu
   useEffect(() => {
     // Resetowanie referencji
     textRefs.current = textRefs.current.slice(0, visibleCount);
+    containerRefs.current = containerRefs.current.slice(0, visibleCount);
 
-    const adjustFontSize = () => {
+    const adjustTextDisplay = () => {
       textRefs.current.forEach((textElement, index) => {
-        if (!textElement) return;
+        if (!textElement || !containerRefs.current[index]) return;
 
-        const parentHeight = textElement.parentElement.clientHeight;
-        const testimonialContent = textElement.parentElement;
+        const container = containerRefs.current[index];
+        const containerHeight = container.clientHeight;
+        const containerWidth = container.clientWidth;
 
-        // Resetowanie rozmiaru czcionki do wartości początkowej
+        // Resetowanie rozmiaru czcionki i stylów do wartości początkowej
         textElement.style.fontSize = '0.95em';
+        textElement.style.wordBreak = 'normal';
+        textElement.style.overflowWrap = 'break-word';
+        textElement.style.hyphens = 'auto';
+        textElement.style.textAlign = 'left';
+        textElement.style.paddingLeft = '0';
+        textElement.style.paddingRight = '0';
 
-        // Sprawdzenie czy tekst przekracza wysokość kontenera
-        if (testimonialContent.scrollHeight > parentHeight) {
+        // Sprawdzenie czy tekst przekracza wymiary kontenera
+        if (container.scrollHeight > containerHeight || container.scrollWidth > containerWidth) {
+          // Zwiększ padding na małych ekranach
+          if (window.innerWidth < 480) {
+            textElement.style.paddingLeft = '2px';
+            textElement.style.paddingRight = '2px';
+          }
+
+          // Włącz dzielenie słów
+          textElement.style.wordBreak = 'break-word';
+          textElement.style.overflowWrap = 'break-word';
+          textElement.style.hyphens = 'auto';
+
           // Stopniowe zmniejszanie rozmiaru czcionki, aż tekst się zmieści
           let fontSize = 0.9;
-          while (testimonialContent.scrollHeight > parentHeight && fontSize > 0.7) {
+          while ((container.scrollHeight > containerHeight || container.scrollWidth > containerWidth) && fontSize > 0.65) {
             fontSize -= 0.05;
             textElement.style.fontSize = `${fontSize}em`;
+
+            // Jeśli jesteśmy na bardzo małym urządzeniu i czcionka jest już mała, wycentruj tekst
+            if (fontSize <= 0.75 && window.innerWidth < 480) {
+              textElement.style.textAlign = 'center';
+            }
           }
         }
       });
     };
 
     // Dostosuj rozmiar czcionki po renderowaniu
-    setTimeout(adjustFontSize, 0);
+    const timer = setTimeout(adjustTextDisplay, 100);
+    return () => clearTimeout(timer);
   }, [current, visibleCount, testimonials]);
 
   const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -112,7 +140,10 @@ export default function TestimonialsCarousel() {
       <div className="testimonial-container">
         {visibleTestimonials.map((item, index) => (
           <div key={index} className="testimonial-card">
-            <div className="testimonial-content">
+            <div
+              className="testimonial-content"
+              ref={el => containerRefs.current[index] = el}
+            >
               <p
                 className="testimonial-text"
                 ref={el => textRefs.current[index] = el}

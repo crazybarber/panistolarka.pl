@@ -64,10 +64,36 @@ body {
     padding: 6px 12px;
     border-radius: 16px;
     transition: background 0.2s, color 0.2s;
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* Usuwa domyślny efekt kliknięcia na urządzeniach mobilnych */
+    user-select: none; /* Zapobiega zaznaczaniu tekstu podczas kliknięć */
 }
 
-.header-nav a:hover,
+/* Style dla desktopów (urządzenia z myszką) */
+@media (hover: hover) and (pointer: fine) {
+    .header-nav a:hover,
+    .header-nav a:focus {
+        background: #fcf3ed;
+        color: #771611;
+    }
+}
+
+/* Style dla urządzeń mobilnych (ekrany dotykowe) */
+@media (hover: none) or (pointer: coarse) {
+    .header-nav a:active {
+        background: #fcf3ed;
+        color: #771611;
+        transition: none; /* Szybsza reakcja przy dotknięciu */
+    }
+
+    /* Po zwolnieniu nacisku efekt powinien zniknąć natychmiast */
+    .header-nav a {
+        transition: background 0.1s, color 0.1s; /* Szybszy powrót do stanu pierwotnego */
+    }
+}
+
+/* Zachowanie ogólne (dla wszystkich urządzeń) */
 .header-nav a:focus {
+    outline: none;
     background: #fcf3ed;
     color: #771611;
 }
@@ -272,6 +298,7 @@ body {
     max-width: 1200px;
     position: relative;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .testimonial-container {
@@ -282,6 +309,7 @@ body {
     width: 100%;
     justify-content: center;
     padding: 20px 0; /* Dodanie przestrzeni między kartami a górną/dolną krawędzią kontenera */
+    box-sizing: border-box;
 }
 
 .testimonial-card {
@@ -298,6 +326,7 @@ body {
     display: flex; /* Pozwala na wyśrodkowanie zawartości */
     flex-direction: column;
     justify-content: center; /* Wyśrodkowanie zawartości w pionie */
+    box-sizing: border-box;
 }
 
 .testimonial-card:hover {
@@ -313,6 +342,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center; /* Wyśrodkowanie zawartości */
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .testimonial-content::before {
@@ -324,6 +355,7 @@ body {
     left: -10px;
     font-family: 'Georgia', serif;
     z-index: 0;
+    pointer-events: none;
 }
 
 .testimonial-text {
@@ -333,6 +365,9 @@ body {
     position: relative;
     z-index: 1;
     font-style: italic;
+    padding: 0 5px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .testimonial-author {
@@ -341,6 +376,7 @@ body {
     color: #eaa372;
     text-align: right;
     margin: 0;
+    padding-right: 5px;
 }
 
 /* Responsywność dla testimonial */
