@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import yaml from 'js-yaml';
 
 // Importuj wszystkie pliki YAML z katalogu referrals i parsuj je
@@ -40,6 +40,7 @@ function getVisibleCount(width) {
 export default function TestimonialsCarousel() {
   const [current, setCurrent] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
+  const textRefs = useRef([]);
 
   // Wykrywanie rozdzielczości ekranu
   useEffect(() => {
@@ -56,6 +57,37 @@ export default function TestimonialsCarousel() {
     // Sprzątanie
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Funkcja do automatycznego dostosowania rozmiaru czcionki
+  useEffect(() => {
+    // Resetowanie referencji
+    textRefs.current = textRefs.current.slice(0, visibleCount);
+
+    const adjustFontSize = () => {
+      textRefs.current.forEach((textElement, index) => {
+        if (!textElement) return;
+
+        const parentHeight = textElement.parentElement.clientHeight;
+        const testimonialContent = textElement.parentElement;
+
+        // Resetowanie rozmiaru czcionki do wartości początkowej
+        textElement.style.fontSize = '0.95em';
+
+        // Sprawdzenie czy tekst przekracza wysokość kontenera
+        if (testimonialContent.scrollHeight > parentHeight) {
+          // Stopniowe zmniejszanie rozmiaru czcionki, aż tekst się zmieści
+          let fontSize = 0.9;
+          while (testimonialContent.scrollHeight > parentHeight && fontSize > 0.7) {
+            fontSize -= 0.05;
+            textElement.style.fontSize = `${fontSize}em`;
+          }
+        }
+      });
+    };
+
+    // Dostosuj rozmiar czcionki po renderowaniu
+    setTimeout(adjustFontSize, 0);
+  }, [current, visibleCount, testimonials]);
 
   const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   const next = () => setCurrent((prev) => (prev + 1) % testimonials.length);
@@ -81,7 +113,12 @@ export default function TestimonialsCarousel() {
         {visibleTestimonials.map((item, index) => (
           <div key={index} className="testimonial-card">
             <div className="testimonial-content">
-              <p className="testimonial-text">{item.text}</p>
+              <p
+                className="testimonial-text"
+                ref={el => textRefs.current[index] = el}
+              >
+                {item.text}
+              </p>
               <p className="testimonial-author">{item.author}</p>
             </div>
           </div>
