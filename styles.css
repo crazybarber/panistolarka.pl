@@ -301,6 +301,35 @@ body {
     box-sizing: border-box;
 }
 
+/* Dodanie styli dla strzałek karuzeli testimoniali */
+.testimonials-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(234, 163, 114, 0.8);
+    color: #771611;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 2px 8px rgba(119, 22, 17, 0.2);
+    font-size: 1.2em;
+}
+
+.testimonials-arrow.left {
+    left: 10px;
+}
+
+.testimonials-arrow.right {
+    right: 10px;
+}
+
 .testimonial-container {
     display: flex;
     gap: 20px;
@@ -380,20 +409,32 @@ body {
 }
 
 /* Responsywność dla testimonial */
-@media (max-width: 1024px) {
-    .testimonial-container > div {
-        flex: 0 0 calc(50% - 10px);
-    }
-}
-
-/* Dodatkowe style dla urządzeń mobilnych */
 @media (max-width: 768px) {
+    .testimonials-arrow {
+        width: 30px;
+        height: 30px;
+        font-size: 1em;
+    }
+
+    .testimonials-arrow.left {
+        left: 5px;
+    }
+
+    .testimonials-arrow.right {
+        right: 5px;
+    }
+
+    .testimonials-carousel {
+        gap: 8px; /* Zmniejszenie odstępu między kartami a strzałkami */
+        padding: 0 5px;
+    }
+
     .testimonial-card {
         height: auto; /* Usunięcie stałej wysokości na urządzeniach mobilnych */
         min-height: 150px; /* Zmniejszona minimalna wysokość karty */
         max-height: none; /* Brak ograniczenia maksymalnej wysokości */
         padding: 12px 10px; /* Zmniejszony padding z boków */
-        width: 85%; /* Upewniamy się, że karta nie jest zbyt szeroka */
+        width: 60%; /* Upewniamy się, że karta nie jest zbyt szeroka */
         margin: 0 auto; /* Centrujemy kartę */
         overflow: visible; /* Umożliwiamy wyświetlanie całej zawartości */
         box-sizing: border-box; /* Uwzględniamy padding w szerokości */
@@ -403,6 +444,7 @@ body {
         max-height: none; /* Usunięcie ograniczenia wysokości */
         padding: 5px 0;
         overflow: visible; /* Pozwala na wyświetlenie całej zawartości */
+        width: 100%;
     }
 
     .testimonial-text {
@@ -411,6 +453,7 @@ body {
         word-break: break-word; /* Łamanie długich słów */
         overflow-wrap: break-word; /* Zapewnia łamanie długich słów */
         white-space: normal; /* Normalny przepływ tekstu */
+        width: 100%;
     }
 
     .testimonial-author {
@@ -427,11 +470,30 @@ body {
 
     .testimonial-container {
         padding: 10px 0; /* Mniejszy padding kontenera */
-        gap: 10px; /* Zmniejszenie odstępu między kartami */
+        gap: 2px; /* Zmniejszenie odstępu między kartami */
     }
 }
 
 @media (max-width: 600px) {
+    .testimonials-arrow {
+        width: 26px;
+        height: 26px;
+        font-size: 0.9em;
+    }
+
+    .testimonials-arrow.left {
+        left: 2px;
+    }
+
+    .testimonials-arrow.right {
+        right: 2px;
+    }
+
+    .testimonials-carousel {
+        gap: 4px; /* Jeszcze mniejszy odstęp */
+        padding: 0 2px;
+    }
+
     .testimonial-container > div {
         flex: 0 0 100%;
     }
@@ -448,6 +510,25 @@ body {
 
 /* Dodatkowe poprawki dla jeszcze mniejszych ekranów */
 @media (max-width: 480px) {
+    .testimonials-arrow {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8em;
+    }
+
+    .testimonials-arrow.left {
+        left: 0;
+    }
+
+    .testimonials-arrow.right {
+        right: 0;
+    }
+
+    .testimonials-carousel {
+        gap: 0;
+        padding: 0;
+    }
+
     .testimonial-card {
         min-height: 120px;
         padding: 8px 6px;
@@ -468,6 +549,7 @@ body {
     }
 
     .testimonial-container {
+        display: block;  /* Zmiana z flex na block */
         padding: 5px 0;
         gap: 6px;
     }
@@ -478,34 +560,67 @@ body {
     .testimonial-card {
         padding: 6px 5px;
         min-height: 100px;
-        width: 82%;
+        width: 80%; /* Zmniejszenie szerokości karty, aby było więcej miejsca na marginesy */
+        margin: 0 auto;
     }
 
     .testimonial-text {
         font-size: 0.75em;
         line-height: 1.2;
         margin-bottom: 8px;
+        padding: 0 8px; /* Zwiększony padding horyzontalny */
+        width: calc(100% - 16px); /* Uwzględnienie paddingu w szerokości */
+        max-width: 100%;
+        overflow-wrap: anywhere; /* Zapewnia łamanie słów w dowolnym miejscu, jeśli konieczne */
+        hyphens: auto; /* Włączenie dzielenia wyrazów */
     }
 
     .testimonial-author {
         font-size: 0.75em;
         margin-top: 5px;
+        padding-right: 8px; /* Zwiększony padding z prawej */
     }
 
     .testimonial-content::before {
-        font-size: 1.8em;
-        top: -10px;
+        font-size: 1.6em; /* Jeszcze mniejszy cudzysłów */
+        top: -8px;
         left: -2px;
-        opacity: 0.5;
+        opacity: 0.4; /* Zmniejszenie widoczności cudzysłowu */
     }
 
     .testimonial-content {
         padding: 2px 0;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+}
+
+/* Dodatkowe style specjalnie dla zakresu 400-420px */
+@media (min-width: 400px) and (max-width: 420px) {
+    .testimonial-card {
+        width: 60% !important; /* Wymuszona szerokość karty - nadpisuje wszystkie inne reguły */
+        margin: 0 auto !important; /* Wymuszone centrowanie */
+        padding: 5px !important;
+        min-height: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .testimonial-text {
+        font-size: 0.7em !important; /* Jeszcze mniejszy tekst */
+        padding: 0 5px !important; /* Mniejszy padding boczny */
+        width: calc(100% - 10px) !important;
+        margin-bottom: 5px !important;
     }
 
     .testimonial-container {
-        padding: 2px 0;
-        gap: 5px;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    .testimonial-author {
+        font-size: 0.7em !important;
+        margin-top: 3px !important;
     }
 }
 
