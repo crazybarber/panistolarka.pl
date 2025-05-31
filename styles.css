@@ -343,10 +343,55 @@ body {
     margin: 0;
 }
 
-/* Responsywność */
+/* Responsywność dla testimonial */
 @media (max-width: 1024px) {
     .testimonial-container > div {
         flex: 0 0 calc(50% - 10px);
+    }
+}
+
+/* Dodatkowe style dla urządzeń mobilnych */
+@media (max-width: 768px) {
+    .testimonial-card {
+        height: auto; /* Usunięcie stałej wysokości na urządzeniach mobilnych */
+        min-height: 150px; /* Zmniejszona minimalna wysokość karty */
+        max-height: none; /* Brak ograniczenia maksymalnej wysokości */
+        padding: 12px 10px; /* Zmniejszony padding z boków */
+        width: 85%; /* Upewniamy się, że karta nie jest zbyt szeroka */
+        margin: 0 auto; /* Centrujemy kartę */
+        overflow: visible; /* Umożliwiamy wyświetlanie całej zawartości */
+        box-sizing: border-box; /* Uwzględniamy padding w szerokości */
+    }
+
+    .testimonial-content {
+        max-height: none; /* Usunięcie ograniczenia wysokości */
+        padding: 5px 0;
+        overflow: visible; /* Pozwala na wyświetlenie całej zawartości */
+    }
+
+    .testimonial-text {
+        font-size: 0.85em; /* Jeszcze mniejszy tekst */
+        line-height: 1.4;
+        word-break: break-word; /* Łamanie długich słów */
+        overflow-wrap: break-word; /* Zapewnia łamanie długich słów */
+        white-space: normal; /* Normalny przepływ tekstu */
+    }
+
+    .testimonial-author {
+        font-size: 0.8em;
+        margin-top: 8px;
+    }
+
+    .testimonial-content::before {
+        font-size: 2.5em; /* Jeszcze mniejszy cudzysłów */
+        top: -15px;
+        left: -5px;
+        opacity: 0.7; /* Zmniejszenie widoczności cudzysłowu */
+    }
+
+    .testimonial-container {
+        padding: 10px 0; /* Mniejszy padding kontenera */
+        gap: 10px; /* Zmniejszenie odstępu między kartami */
     }
 }
 
@@ -354,38 +399,78 @@ body {
     .testimonial-container > div {
         flex: 0 0 100%;
     }
+
+    .testimonial-card {
+        padding: 10px 8px;
+        width: 85%;
+    }
+
+    .testimonial-container {
+        gap: 8px;
+    }
 }
 
-.testimonials-arrow {
-    background: #fcf3ed;
-    color: #eaa372;
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    font-size: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(234,163,114,0.10);
-    transition: background 0.2s, color 0.2s, transform 0.2s;
-    z-index: 2;
+/* Dodatkowe poprawki dla jeszcze mniejszych ekranów */
+@media (max-width: 480px) {
+    .testimonial-card {
+        min-height: 120px;
+        padding: 8px 6px;
+        width: 85%;
+    }
+
+    .testimonial-text {
+        font-size: 0.8em;
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+
+    .testimonial-content::before {
+        font-size: 2em;
+        top: -12px;
+        left: -3px;
+        opacity: 0.6;
+    }
+
+    .testimonial-container {
+        padding: 5px 0;
+        gap: 6px;
+    }
 }
 
-.testimonials-arrow:hover,
-.testimonials-arrow:focus {
-    background: #eaa372;
-    color: #fff;
-    transform: scale(1.08);
-}
+/* Specjalne poprawki dla bardzo małych ekranów */
+@media (max-width: 450px) {
+    .testimonial-card {
+        padding: 6px 5px;
+        min-height: 100px;
+        width: 82%;
+    }
 
-.testimonials-arrow.left {
-    margin-right: 8px;
-}
+    .testimonial-text {
+        font-size: 0.75em;
+        line-height: 1.2;
+        margin-bottom: 8px;
+    }
 
-.testimonials-arrow.right {
-    margin-left: 8px;
+    .testimonial-author {
+        font-size: 0.75em;
+        margin-top: 5px;
+    }
+
+    .testimonial-content::before {
+        font-size: 1.8em;
+        top: -10px;
+        left: -2px;
+        opacity: 0.5;
+    }
+
+    .testimonial-content {
+        padding: 2px 0;
+    }
+
+    .testimonial-container {
+        padding: 2px 0;
+        gap: 5px;
+    }
 }
 
 /* Contact section styling */
@@ -532,6 +617,64 @@ body {
     transform: translateY(-2px) scale(1.03);
 }
 
+/* Dodanie responsywności dla sekcji kontaktowej */
+@media (max-width: 900px) {
+    .contact-container {
+        gap: 30px;
+    }
+
+    .contact-photo img {
+        width: 280px;
+        height: 340px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .contact-info {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .contact-photo {
+        flex: 0 0 auto;
+        align-items: center;
+        padding: 0;
+    }
+
+    .contact-photo img {
+        width: 260px;
+        height: 320px;
+        margin-bottom: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact h2 {
+        font-size: 1.8em;
+        margin-bottom: 30px;
+    }
+
+    .contact-info {
+        font-size: 1em;
+    }
+
+    .contact-photo img {
+        width: 240px;
+        height: 300px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 10px 12px;
+    }
+}
+
 .footer {
     background-color: #468470;
     color: #fcf3ed;
@@ -566,32 +709,6 @@ body {
     
     .testimonial-card {
         min-width: 280px;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px;
-        padding: 5px 10px;
-    }
-    
-    .sticky-header {
-        height: auto;
-    }
-    
-    .header-nav {
-        gap: 10px;
-    }
-    
-    .header-nav a {
-        font-size: 0.9em;
-        padding: 4px 8px;
-    }
-    
-    .content-wrapper {
-        margin-top: 98vh; /* Slightly less to avoid possible gaps on some devices */
     }
 }
 
@@ -1053,32 +1170,6 @@ body {
     
     .custom-gallery-main {
         flex: 0 0 50%;
-    }
-}
-
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px;
-        padding: 5px 10px;
-    }
-    
-    .sticky-header {
-        height: auto;
-    }
-    
-    .header-nav {
-        gap: 10px;
-    }
-    
-    .header-nav a {
-        font-size: 0.9em;
-        padding: 4px 8px;
-    }
-    
-    .content-wrapper {
-        margin-top: 98vh; /* Slightly less to avoid possible gaps on some devices */
     }
 }
 
